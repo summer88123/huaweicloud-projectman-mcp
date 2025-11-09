@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "huaweicloud-projectman": {
+      "command": "node",
+      "args": ["E:/Code/huaweicloud-projectman-mcp/build/index.js"],
+      "env": {
+        "HUAWEI_CLOUD_AK": "your-access-key",
+        "HUAWEI_CLOUD_SK": "your-secret-key",
+        "HUAWEI_CLOUD_PROJECT_ID": "your-project-id",
+        "HUAWEI_CLOUD_REGION": "cn-north-1"
+      }
+    }
+  }
+}
