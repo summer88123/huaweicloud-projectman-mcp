@@ -1,5 +1,4 @@
 # huaweicloud-projectman-mcp
-
 A Model Context Protocol (MCP) server for HuaweiCloud ProjectMan integration, enabling AI assistants to interact with ProjectMan issues and work hours.
 
 ## Features
