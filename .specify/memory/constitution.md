@@ -1,26 +1,29 @@
 <!--
-Sync Impact Report - Constitution v1.0.0
+Sync Impact Report - Constitution v1.1.0
 ═══════════════════════════════════════════════════════════════════
-Version Change: Initial → 1.0.0
-Rationale: First constitution ratification for HuaweiCloud ProjectMan MCP project
+Version Change: 1.0.0 → 1.1.0
+Rationale: MINOR bump - Added new principle VI (LLM-Friendly Parameter Forwarding Focus)
+           to clarify project scope and positioning
 
-Modified Principles: N/A (initial creation)
+Modified Principles: N/A
 Added Sections:
-  - Core Principles (5 principles defined)
-  - MCP Protocol Compliance
-  - Development Workflow
-  - Governance
+  - Principle VI: LLM-Friendly Parameter Forwarding Focus (NON-NEGOTIABLE)
 
 Removed Sections: N/A
 
 Templates Status:
-  ✅ spec-template.md - Reviewed, compatible with constitution
-  ✅ plan-template.md - Reviewed, compatible with constitution
-  ✅ tasks-template.md - Reviewed, compatible with constitution
+  ✅ spec-template.md - Reviewed, compatible with new principle
+  ✅ plan-template.md - Reviewed, compatible with new principle
+  ✅ tasks-template.md - Reviewed, compatible with new principle
   ⚠ checklist-template.md - Not reviewed (requires manual check)
   ⚠ agent-file-template.md - Not reviewed (requires manual check)
 
 Follow-up TODOs: None
+Impact Analysis:
+  - New principle VI clarifies project is an MCP adapter layer, not a business logic layer
+  - This principle reinforces existing Principle IV (Single Responsibility) by making
+    the "parameter forwarding only" constraint explicit
+  - All existing templates remain compatible as they already encourage separation of concerns
 ═══════════════════════════════════════════════════════════════════
 -->
 
@@ -89,6 +92,18 @@ Follow-up TODOs: None
 
 **Rationale**: Credential leaks are critical security vulnerabilities. Huawei Cloud IAM violations can lead to account compromise and regulatory penalties.
 
+### VI. LLM-Friendly Parameter Forwarding Focus (NON-NEGOTIABLE)
+
+**MUST**: This project MUST focus exclusively on adapting HuaweiCloud ProjectMan SDK to MCP protocol in an LLM-friendly manner.
+
+**MUST**: This project MUST forward parameters to ProjectMan client without implementing business logic related to project management workflows.
+
+**MUST NOT**: Implement domain-specific business rules, workflow validations, or project management policies.
+
+**MUST**: Tool implementations SHOULD transform and validate parameters for LLM compatibility but MUST NOT alter ProjectMan API semantics.
+
+**Rationale**: This project is an MCP adapter layer, not a project management application. Mixing business logic creates maintainability issues, duplicates ProjectMan SDK responsibilities, and violates single responsibility principle. LLM agents consume this server to access ProjectMan capabilities - the server's only job is protocol translation and parameter forwarding.
+
 ## MCP Protocol Compliance
 
 **Server Metadata**: MUST declare accurate server name, version, and capabilities in server info response.
@@ -137,4 +152,4 @@ This Constitution supersedes all other development practices and preferences. An
 
 **Runtime Guidance**: Development agents SHOULD reference this constitution when making architectural decisions. For feature-specific guidance, consult `/specs/` documentation.
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-10 | **Last Amended**: 2025-11-10
+**Version**: 1.1.0 | **Ratified**: 2025-11-10 | **Last Amended**: 2025-11-10
