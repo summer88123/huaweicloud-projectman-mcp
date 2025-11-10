@@ -29,6 +29,7 @@ Follow-up TODOs: None
 ## Core Principles
 
 ### I. Type-Safe Configuration
+
 **MUST**: All configuration parameters (AK, SK, project_id, region, endpoint) MUST be defined with TypeScript types in `types/global.ts`.
 
 **MUST**: Runtime validation MUST be performed for all required configuration fields before client initialization.
@@ -38,6 +39,7 @@ Follow-up TODOs: None
 **Rationale**: Type safety catches configuration errors at compile time, reducing runtime failures. Clear error messages accelerate troubleshooting in production environments where credentials may be misconfigured.
 
 ### II. MCP Protocol Compliance (NON-NEGOTIABLE)
+
 **MUST**: All tool implementations MUST strictly adhere to Model Context Protocol specification.
 
 **MUST**: Tools MUST accept input via stdio and return JSON-formatted responses.
@@ -49,6 +51,7 @@ Follow-up TODOs: None
 **Rationale**: MCP protocol compliance ensures interoperability with all MCP clients (Claude Desktop, IDEs, etc.). Breaking protocol contracts renders the server unusable.
 
 ### III. Test-First Development
+
 **MUST**: Unit tests MUST be written before implementation for all new features.
 
 **MUST**: Tests MUST fail initially (Red), then pass after implementation (Green), followed by refactoring.
@@ -60,19 +63,22 @@ Follow-up TODOs: None
 **Rationale**: TDD ensures requirements are clear before coding begins. High coverage prevents regressions in critical authentication and API communication paths.
 
 ### IV. Single Responsibility & Modularity
+
 **MUST**: Each module MUST have a single, well-defined responsibility:
-  - `projectman/`: Client initialization and credential management only
-  - `tools/`: MCP tool implementations only
-  - `resources/`: MCP resource providers only
-  - `prompts/`: MCP prompt templates only
-  - `services/`: Transport layer (stdio/SSE) only
-  - `utils/`: Pure utility functions only
+
+- `projectman/`: Client initialization and credential management only
+- `tools/`: MCP tool implementations only
+- `resources/`: MCP resource providers only
+- `prompts/`: MCP prompt templates only
+- `services/`: Transport layer (stdio/SSE) only
+- `utils/`: Pure utility functions only
 
 **MUST NOT**: Mix concerns across module boundaries (e.g., tool logic in client module).
 
 **Rationale**: Clear separation enables independent testing, parallel development, and easier debugging. Violation creates tight coupling and merge conflicts.
 
 ### V. Security & Credential Handling
+
 **MUST**: Credentials (AK/SK) MUST NEVER be logged, printed to stdout, or included in error messages.
 
 **MUST**: Credentials MUST be loaded from environment variables or secure configuration files only.
@@ -102,10 +108,11 @@ Follow-up TODOs: None
 **Specification**: All features MUST have a spec in `/specs/[###-feature-name]/spec.md` with user stories, requirements, and success criteria before implementation.
 
 **Code Review**: All PRs MUST pass:
-  - TypeScript compilation with no errors
-  - ESLint checks with no violations
-  - Vitest unit tests with >80% coverage for new code
-  - Manual verification of MCP protocol compliance
+
+- TypeScript compilation with no errors
+- ESLint checks with no violations
+- Vitest unit tests with >80% coverage for new code
+- Manual verification of MCP protocol compliance
 
 **Commit Messages**: MUST follow Conventional Commits format (`feat:`, `fix:`, `docs:`, `test:`, etc.).
 
@@ -114,15 +121,17 @@ Follow-up TODOs: None
 This Constitution supersedes all other development practices and preferences. Any deviation MUST be explicitly justified in PR description or architectural decision record.
 
 **Amendments**: Constitution changes require:
-  1. Proposal with rationale and impact analysis
-  2. Update to all affected templates in `.specify/templates/`
-  3. Version bump following semantic versioning
-  4. Sync Impact Report documenting changes
+
+1. Proposal with rationale and impact analysis
+2. Update to all affected templates in `.specify/templates/`
+3. Version bump following semantic versioning
+4. Sync Impact Report documenting changes
 
 **Versioning Policy**:
-  - MAJOR: Removal or incompatible changes to core principles
-  - MINOR: Addition of new principles or significant expansions
-  - PATCH: Clarifications, wording improvements, non-semantic fixes
+
+- MAJOR: Removal or incompatible changes to core principles
+- MINOR: Addition of new principles or significant expansions
+- PATCH: Clarifications, wording improvements, non-semantic fixes
 
 **Compliance Review**: Each PR MUST verify alignment with applicable principles. Constitution violations block merge unless explicitly approved with justification.
 
