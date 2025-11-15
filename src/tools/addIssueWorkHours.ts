@@ -1,10 +1,7 @@
 import { WORK_HOUR_TYPES } from '@/constants/index.js'
 import { getProjectManClient } from '@/projectman/index.js'
 import type { OptionsType } from '@/types'
-import {
-  AddIssueWorkHoursRequest,
-  AddIssueWorkHoursRequestBody,
-} from '@huaweicloud/huaweicloud-sdk-projectman/v4/public-api'
+import { AddIssueWorkHoursRequest, AddIssueWorkHoursRequestBody } from '@huaweicloud/huaweicloud-sdk-projectman'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 
