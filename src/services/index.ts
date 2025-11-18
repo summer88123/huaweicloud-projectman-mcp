@@ -1,9 +1,9 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { registerTools } from '@/tools'
-import { registerResources } from '@/resources'
 import { registerPrompts } from '@/prompts'
-import { stdioServer } from './stdio'
+import { registerResources } from '@/resources'
+import { registerTools } from '@/tools'
 import type { OptionsType } from '@/types'
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import { stdioServer } from './stdio'
 
 const createServer = (options: OptionsType) => {
   const server = new McpServer({
