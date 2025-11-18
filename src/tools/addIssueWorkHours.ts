@@ -1,4 +1,4 @@
-import { WORK_HOUR_TYPES } from '@/constants/index.js'
+import { WORK_HOUR_TYPES } from '@/projectman/constant.js'
 import { getProjectManClient } from '@/projectman/index.js'
 import type { OptionsType } from '@/types'
 import { AddIssueWorkHoursRequest, AddIssueWorkHoursRequestBody } from '@huaweicloud/huaweicloud-sdk-projectman'
@@ -16,6 +16,8 @@ export default function register(server: McpServer, options: OptionsType) {
       title: 'Add Issue Work Hours',
       description: 'Add work hour record to a HuaweiCloud ProjectMan issue',
       inputSchema: {
+        projectId: z.string().min(1, 'Project ID is required').describe('The ID of the project'),
+
         issueId: z
           .number()
           .int('Issue ID must be an integer')
@@ -25,8 +27,6 @@ export default function register(server: McpServer, options: OptionsType) {
         workHoursTypeId: z
           .number()
           .int('Work hour type ID must be an integer')
-          .min(21, 'Work hour type ID must be between 21 and 34')
-          .max(34, 'Work hour type ID must be between 21 and 34')
           .describe(
             `Type of work performed. Available types:\n${Object.entries(WORK_HOUR_TYPES)
               .map(([id, name]) => `${id}: ${name}`)
@@ -49,7 +49,7 @@ export default function register(server: McpServer, options: OptionsType) {
           .describe('End date of the work period (YYYY-MM-DD)'),
       },
     },
-    async ({ issueId, workHoursTypeId, workHours, startDate, dueDate }) => {
+    async ({ projectId, issueId, workHoursTypeId, workHours, startDate, dueDate }) => {
       try {
         // Validate date range
         if (new Date(startDate) > new Date(dueDate)) {
@@ -68,7 +68,7 @@ export default function register(server: McpServer, options: OptionsType) {
         const client = clientWrapper.client
 
         const request = new AddIssueWorkHoursRequest()
-        request.projectId = options.project_id
+        request.projectId = projectId
         request.issueId = issueId
 
         const body = new AddIssueWorkHoursRequestBody()
