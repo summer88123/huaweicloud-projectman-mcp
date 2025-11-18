@@ -81,3 +81,52 @@ export const DOMAIN_TYPES: Record<string, string> = {
 }
 
 export type DomainTypeId = keyof typeof DOMAIN_TYPES
+
+/**
+ * Custom Field Types defined by HuaweiCloud ProjectMan
+ * These are the custom fields configured for the project
+ */
+export interface CustomFieldDefinition {
+  customField: string
+  type: string
+  name: string
+  options: string[] | null
+}
+
+export const CUSTOM_FIELDS: CustomFieldDefinition[] = [
+  {
+    customField: 'custom_field32',
+    type: 'checkbox',
+    name: '缺陷技术分析',
+    options: [
+      '功能实现问题',
+      '需求变更问题',
+      '历史遗留问题',
+      '代码逻辑问题',
+      '用户界面问题',
+      '接口问题',
+      '数据问题',
+      '性能问题',
+      '环境问题',
+      '兼容性问题',
+      '产品设计问题',
+      '优化建议问题',
+      '技术引起的需求变更问题',
+      '其他问题',
+    ],
+  },
+  {
+    customField: 'custom_field39',
+    type: 'textArea',
+    name: '问题原因及解决办法',
+    options: null,
+  },
+  {
+    customField: 'custom_field29',
+    type: 'radio',
+    name: '引入阶段',
+    options: ['历史版本', 'yyyyMM 格式，例如 202508'],
+  },
+]
+
+export type CustomFieldId = string
