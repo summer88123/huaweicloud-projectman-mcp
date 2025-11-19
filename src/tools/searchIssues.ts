@@ -14,18 +14,14 @@ interface SimplifiedIssue {
   tracker: string
   status: string
   priority: string
-  severity?: { id: number; name: string }
+  severity?: string
   domain?: string
-  assignedTo?: { id: number; name: string; nickName?: string }
-  author?: { id: number; name: string; nickName?: string }
-  doneRatio: number
+  assignedTo?: { id: number; name: string }
+  author?: { id: number; name: string }
   expectedWorkHours: number
   actualWorkHours: number
-  createdOn: string
-  updatedOn: string
-  dueDate?: string
-  closedFlag: number
   parentIssue?: { id: number; subject: string }
+  projectId: string
 }
 
 /**
@@ -212,26 +208,27 @@ export default function register(server: McpServer, options: OptionsType) {
             status: issue.status?.name,
             priority: issue.priority?.name,
             domain: issue.domain?.name,
-            ...(issue.assigned_to?.id && {
-              assignedTo: {
-                id: issue.assigned_to.id,
-                name: issue.author.author_nick_name || issue.assigned_to.first_name || issue.assigned_to.last_name,
-              },
-            }),
-            ...(issue.author && {
-              author: {
-                id: issue.author.id,
-                name: issue.author.author_nick_name || issue.author.first_name || issue.author.last_name,
-              },
-            }),
+            assignedTo: issue.assigned_to
+              ? {
+                  id: issue.assigned_to.id,
+                  name: issue.author.author_nick_name || issue.assigned_to.first_name || issue.assigned_to.last_name,
+                }
+              : undefined,
+            author: issue.author
+              ? {
+                  id: issue.author.id,
+                  name: issue.author.author_nick_name || issue.author.first_name || issue.author.last_name,
+                }
+              : undefined,
             expectedWorkHours: issue.expected_work_hours || 0,
             actualWorkHours: issue.actual_work_hours || 0,
-            ...(issue.parent_issue && {
-              parentIssue: {
-                id: issue.parent_issue.id,
-                subject: issue.parent_issue.subject,
-              },
-            }),
+            parentIssue: issue.parent_issue
+              ? {
+                  id: issue.parent_issue.id,
+                  subject: issue.parent_issue.subject,
+                }
+              : undefined,
+            projectId: issue.project?.identifier,
           })) || []
 
         const simplifiedResponse = {

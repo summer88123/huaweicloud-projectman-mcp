@@ -16,13 +16,20 @@ export default function register(server: McpServer, options: OptionsType) {
       title: 'Add Issue Work Hours',
       description: 'Add work hour record to a HuaweiCloud ProjectMan issue',
       inputSchema: {
-        projectId: z.string().min(1, 'Project ID is required').describe('The ID of the project'),
+        projectId: z
+          .string()
+          .min(1, 'Project ID is required')
+          .describe(
+            'The ID of the project. Can be found in the URL path after "scrum/", e.g., in "projectman/scrum/3f2c4b8a9e1d5c7f6a0b8e4d2c9f7a3e/task/detail/85296341", the projectId is "3f2c4b8a9e1d5c7f6a0b8e4d2c9f7a3e"',
+          ),
 
         issueId: z
           .number()
           .int('Issue ID must be an integer')
           .positive('Issue ID must be positive')
-          .describe('The ID of the issue to add work hours to'),
+          .describe(
+            'The ID of the issue to add work hours to. Can be found in the URL path after "detail/", e.g., in "projectman/scrum/3f2c4b8a9e1d5c7f6a0b8e4d2c9f7a3e/task/detail/85296341", the issueId is 85296341',
+          ),
 
         workHoursTypeId: z
           .number()

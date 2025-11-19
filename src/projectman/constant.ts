@@ -1,5 +1,3 @@
-export const MagicSeparator = '###MAGIC###'
-
 /**
  * Work Hour Types defined by HuaweiCloud ProjectMan
  * These are the predefined work hour type IDs (21-34) used when adding work hours to issues

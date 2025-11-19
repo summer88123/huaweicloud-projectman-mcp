@@ -28,13 +28,20 @@ export default function register(server: McpServer, options: OptionsType) {
       description:
         'Update an existing issue in HuaweiCloud ProjectMan. Can update status, assignees, custom fields, and more.',
       inputSchema: {
-        projectId: z.string().min(1, 'Project ID is required').describe('The ID of the project'),
+        projectId: z
+          .string()
+          .min(1, 'Project ID is required')
+          .describe(
+            'The ID of the project. Can be found in the URL path after "scrum/", e.g., in "projectman/scrum/3f2c4b8a9e1d5c7f6a0b8e4d2c9f7a3e/task/detail/85296341", the projectId is "3f2c4b8a9e1d5c7f6a0b8e4d2c9f7a3e"',
+          ),
 
         issueId: z
           .number()
           .int('Issue ID must be an integer')
           .positive('Issue ID must be positive')
-          .describe('The ID of the issue to update'),
+          .describe(
+            'The ID of the issue to update. Can be found in the URL path after "detail/", e.g., in "projectman/scrum/3f2c4b8a9e1d5c7f6a0b8e4d2c9f7a3e/task/detail/85296341", the issueId is 85296341',
+          ),
 
         statusId: z.number().int('Status ID must be an integer').optional().describe('New status ID for the issue'),
 
