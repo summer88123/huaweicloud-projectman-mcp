@@ -1,40 +1,40 @@
 # huaweicloud-projectman-mcp
-A Model Context Protocol (MCP) server for HuaweiCloud ProjectMan integration, enabling AI assistants to interact with ProjectMan issues and work hours.
+华为云 ProjectMan 的模型上下文协议（MCP）服务器，使 AI 助手能够与 ProjectMan 的数据进行交互。
 
-## Features
+## 功能特性
 
-### Tools
+### 工具
 
 #### addIssueWorkHours
 
-Add work hour records to ProjectMan issues with comprehensive validation.
+向 ProjectMan 工作项添加工时记录，具有全面的验证功能。
 
-**Parameters:**
+**参数：**
 
-- `issueId` (number, required): The ID of the issue to add work hours to
-- `workHoursTypeId` (number, required): Type of work performed (21-34)
-- `workHours` (number, required): Number of hours worked (supports decimals, e.g., 2.5)
-- `startDate` (string, required): Start date in YYYY-MM-DD format
-- `dueDate` (string, required): End date in YYYY-MM-DD format
+- `issueId`（数字，必填）：要添加工时的工作项 ID
+- `workHoursTypeId`（数字，必填）：执行的工作类型（21-34）
+- `workHours`（数字，必填）：工作小时数（支持小数，例如 2.5）
+- `startDate`（字符串，必填）：开始日期，格式为 YYYY-MM-DD
+- `dueDate`（字符串，必填）：结束日期，格式为 YYYY-MM-DD
 
-**Work Hour Types:**
+**工时类型：**
 
-- 21: 研发设计 (Design)
-- 22: 后端开发 (Backend Development)
-- 23: 前端开发(Web) (Web Frontend)
-- 24: 前端开发(小程序) (Mini Program)
-- 25: 前端开发(App) (App Development)
-- 26: 测试验证 (Testing)
-- 27: 缺陷修复 (Bug Fixing)
-- 28: UI设计 (UI Design)
-- 29: 会议 (Meetings)
-- 30: 公共事务 (Administrative)
-- 31: 培训 (Training)
-- 32: 研究 (Research)
-- 33: 其它 (Other)
-- 34: 调休请假 (Time Off)
+- 21: 研发设计
+- 22: 后端开发
+- 23: 前端开发(Web)
+- 24: 前端开发(小程序)
+- 25: 前端开发(App)
+- 26: 测试验证
+- 27: 缺陷修复
+- 28: UI设计
+- 29: 会议
+- 30: 公共事务
+- 31: 培训
+- 32: 研究
+- 33: 其它
+- 34: 调休请假
 
-**Example:**
+**示例：**
 
 ```json
 {
@@ -46,52 +46,70 @@ Add work hour records to ProjectMan issues with comprehensive validation.
 }
 ```
 
-**Validation:**
+**验证规则：**
 
-- Issue ID must be a positive integer
-- Work hour type ID must be between 21 and 34
-- Work hours must be greater than zero
-- Dates must be in YYYY-MM-DD format
-- Start date must not be after due date
+- 工作项 ID 必须是正整数
+- 工时类型 ID 必须在 21 到 34 之间
+- 工时数必须大于零
+- 日期必须采用 YYYY-MM-DD 格式
+- 开始日期不能晚于结束日期
 
-## Configuration
+## 配置
 
-Set the following environment variables:
+设置以下环境变量：
 
-- `HUAWEICLOUD_SDK_AK`: Access Key ID
-- `HUAWEICLOUD_SDK_SK`: Secret Access Key
-- `HUAWEICLOUD_SDK_PROJECT_ID`: ProjectMan project ID (32-character hex string)
-- `HUAWEICLOUD_SDK_REGION` (optional): Region identifier (default: cn-north-1)
-- `HUAWEICLOUD_SDK_ENDPOINT` (optional): Custom endpoint URL
+- `HUAWEICLOUD_SDK_AK`：访问密钥 ID
+- `HUAWEICLOUD_SDK_SK`：秘密访问密钥
+- `HUAWEICLOUD_SDK_PROJECT_ID`：IAM 项目 ID，与 REGION 关联
+- `HUAWEICLOUD_SDK_REGION`（可选）：区域标识符（默认：cn-north-1）
+- `HUAWEICLOUD_SDK_ENDPOINT`（可选）：自定义端点 URL
 
-## Installation
+## 使用
+
+将以下配置添加到你的 MCP 客户端配置文件中（例如 Claude Desktop 的 `claude_desktop_config.json`）：
+
+```json
+{
+  "mcpServers": {
+    "huaweicloud-projectman": {
+      "command": "npx",
+      "args": ["huaweicloud-projectman-mcp"],
+      "env": {
+        "HUAWEICLOUD_SDK_AK": "your-access-key-id",
+        "HUAWEICLOUD_SDK_SK": "your-secret-access-key",
+        "HUAWEICLOUD_SDK_PROJECT_ID": "your-32-char-project-id",
+        "HUAWEICLOUD_SDK_REGION": "cn-north-1"
+      }
+    }
+  }
+}
+```
+
+**注意：** 请将配置中的占位符替换为你的实际凭证信息。
+
+AK/SK 和 Project ID 可从华为云控制台的“我的凭证”中获取。
+
+参考文档：[我的凭证](https://support.huaweicloud.com/usermanual-ca/ca_05_0003.html)
+
+## 开发
 
 ```bash
+# 安装依赖
 npm install
-npm run build
-```
 
-## Usage
+# 运行开发服务器
+npm run dev
 
-Run as an MCP server:
-
-```bash
-npm run dev:stdio
-```
-
-## Development
-
-```bash
-# Run tests
+# 运行测试
 npm test
 
-# Run with coverage
+# 运行测试并生成覆盖率报告
 npm run coverage
 
-# Lint code
+# 代码检查
 npm run lint
 
-# Build for production
+# 生产环境构建
 npm run build
 ```
 
