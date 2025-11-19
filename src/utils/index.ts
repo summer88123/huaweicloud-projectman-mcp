@@ -1,6 +1,5 @@
 import type { HuaweiCloudConfig } from '@/projectman/types.js'
 import type { OptionsType } from '@/types'
-import { nanoid } from 'nanoid'
 import type { ArgumentsCamelCase } from 'yargs'
 
 /**
@@ -14,10 +13,6 @@ const ENV_VARS = {
   region: ['HUAWEICLOUD_SDK_REGION', 'HUAWEI_CLOUD_REGION'],
   endpoint: ['HUAWEICLOUD_SDK_ENDPOINT', 'HUAWEI_CLOUD_ENDPOINT'],
 } as const
-
-export function generateSessionId() {
-  return nanoid()
-}
 
 /**
  * 从多个环境变量名称中获取值

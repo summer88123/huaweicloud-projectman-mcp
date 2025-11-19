@@ -24,7 +24,6 @@ export const config = {
   external: [
     'yargs',
     'express',
-    'nanoid',
     'zod',
     'dotenv',
     '@modelcontextprotocol/sdk',
