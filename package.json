@@ -1,6 +1,6 @@
 {
   "name": "huaweicloud-projectman-mcp",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "huaweicloud-projectman-mcp",
   "author": "zhensherlock",
   "type": "module",
@@ -29,6 +29,7 @@
     "@huaweicloud/huaweicloud-sdk-projectman": "^3.1.174",
     "@modelcontextprotocol/sdk": "^1.20.2",
     "dotenv": "^17.2.3",
+    "uuid": "^8.3.2",
     "yargs": "^17.7.2",
     "zod": "^3.25.76"
   },
