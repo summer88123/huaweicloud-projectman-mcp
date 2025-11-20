@@ -105,3 +105,26 @@ export class AuthenticationError extends Error {
     this.name = 'AuthenticationError'
   }
 }
+interface SimplifiedUser {
+  id: number
+  name: string
+}
+/**
+ * Simplified issue item for LLM-friendly response
+ */
+export interface SimplifiedIssue {
+  issueId: number
+  subject: string
+  tracker: string
+  status: string
+  priority: string
+  severity?: string
+  domain?: string
+  assignedTo?: SimplifiedUser
+  author?: SimplifiedUser
+  developer?: SimplifiedUser
+  expectedWorkHours: number
+  actualWorkHours: number
+  parentIssue?: Partial<SimplifiedIssue>
+  projectId: string
+}

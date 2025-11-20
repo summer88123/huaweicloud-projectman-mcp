@@ -1,28 +1,11 @@
 import { PRIORITY_TYPES, STATUS_TYPES, TRACKER_TYPES } from '@/projectman/constant.js'
 import { getProjectManClient } from '@/projectman/index.js'
+import { SimplifiedIssue } from '@/projectman/types'
+import { convertUser } from '@/projectman/util'
 import type { OptionsType } from '@/types'
 import { ListWorkTableIssueRequestV4RequestBody, SearchIssuesRequest } from '@huaweicloud/huaweicloud-sdk-projectman'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
-
-/**
- * Simplified issue item for LLM-friendly response
- */
-interface SimplifiedIssue {
-  issueId: number
-  subject: string
-  tracker: string
-  status: string
-  priority: string
-  severity?: string
-  domain?: string
-  assignedTo?: { id: number; name: string }
-  author?: { id: number; name: string }
-  expectedWorkHours: number
-  actualWorkHours: number
-  parentIssue?: { id: number; subject: string }
-  projectId: string
-}
 
 /**
  * Register the searchIssues MCP tool
@@ -201,30 +184,21 @@ export default function register(server: McpServer, options: OptionsType) {
         // Simplify the response for LLM-friendly format
         const simplifiedIssues: SimplifiedIssue[] =
           // @ts-ignore
-          result.issue_list?.map((issue: any) => ({
+          result.issue_list?.map(issue => ({
             issueId: issue.id,
             subject: issue.subject,
             tracker: issue.tracker?.name,
             status: issue.status?.name,
             priority: issue.priority?.name,
             domain: issue.domain?.name,
-            assignedTo: issue.assigned_to
-              ? {
-                  id: issue.assigned_to.id,
-                  name: issue.author.author_nick_name || issue.assigned_to.first_name || issue.assigned_to.last_name,
-                }
-              : undefined,
-            author: issue.author
-              ? {
-                  id: issue.author.id,
-                  name: issue.author.author_nick_name || issue.author.first_name || issue.author.last_name,
-                }
-              : undefined,
+            assignedTo: convertUser(issue.assigned_to),
+            author: convertUser(issue.author),
+            developer: convertUser(issue.developer),
             expectedWorkHours: issue.expected_work_hours || 0,
             actualWorkHours: issue.actual_work_hours || 0,
             parentIssue: issue.parent_issue
               ? {
-                  id: issue.parent_issue.id,
+                  issueId: issue.parent_issue.id,
                   subject: issue.parent_issue.subject,
                 }
               : undefined,
